@@ -29,10 +29,10 @@ const NavLink = props => {
     }
   };
 
-  // if user hasn't defined active then default is null
+  // if user hasn't defined active prop then default is null
   // if null then default behaviour is to set to active if on the current page
   let isActive;
-  if (active == null) {
+  if (otherProps.href && active == null) {
     const linkPage = otherProps.href.replace(/(^\w+:|^)\/\//, '');
     const currentPage = window.location.href.replace(/(^\w+:|^)\/\//, '');
     isActive = linkPage == currentPage ? true : false;
