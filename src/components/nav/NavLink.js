@@ -29,7 +29,23 @@ const NavLink = props => {
     }
   };
 
-  const classes = classNames(className, 'nav-link', {active, disabled});
+  let classes;
+  if (active == null) {
+    // need to remove https/http from page links then test if the same
+    const linkPage = otherProps.href.replace(/(^\w+:|^)\/\//, '');
+    const currentPage = window.location.href.replace(/(^\w+:|^)\/\//, '');
+    const isActive = linkPage == currentPage ? true : false;
+    console.log(isActive);
+    // get string for class style
+    const classStyle = {};
+    classStyle.active = isActive ? true : false;
+    classStyle.disabled = disabled ? true : false;
+    classes = classNames(className, 'nav-link', classStyle);
+  } else {
+    // if user has defined the active class then uses user input instead
+    classes = classNames(className, 'nav-link', {active, disabled});
+  }
+
   return (
     <Link
       className={classes}
@@ -46,7 +62,7 @@ const NavLink = props => {
 };
 
 NavLink.defaultProps = {
-  active: false,
+  active: null,
   disabled: false,
   n_clicks: 0,
   n_clicks_timestamp: -1
